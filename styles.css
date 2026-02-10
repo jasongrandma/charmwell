@@ -77,7 +77,10 @@ nav {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(135deg, var(--primary) 0%, #3d2f50 100%);
+    background: linear-gradient(135deg, rgba(87, 69, 113, 0.65) 0%, rgba(61, 47, 80, 0.65) 100%),
+                url('images/hero-banner.png');
+    background-size: cover;
+    background-position: center;
     color: var(--secondary);
     text-align: center;
     padding: 6rem 2rem;
@@ -186,11 +189,36 @@ section p {
     aspect-ratio: 16 / 9;
     background-color: var(--primary);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     color: var(--secondary);
     font-family: 'Playfair Display', Georgia, serif;
     font-size: 1.5rem;
+    overflow: hidden;
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.carousel-slide:has(img) {
+    position: relative;
+}
+
+.carousel-slide p {
+    position: relative;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 0.5rem 1.5rem;
+    border-radius: 6px;
+    margin-top: auto;
+    margin-bottom: 1.5rem;
 }
 
 .carousel-slide:nth-child(1) { background: linear-gradient(135deg, #574571 0%, #7a5f9a 100%); }
@@ -836,6 +864,16 @@ textarea {
     .contact-info {
         grid-template-columns: 1fr;
     }
+}
+
+/* Store Image */
+.store-image {
+    width: 100%;
+    max-width: 900px;
+    border-radius: 12px;
+    margin: 1rem auto;
+    display: block;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
 /* Footer */
