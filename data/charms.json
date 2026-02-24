@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "healing-amulet": {
     "name": "Healing Amulet",
@@ -83,4 +84,91 @@
     "stock": "in-stock",
     "rarity": "epic"
   }
+=======
+{
+  "healing-amulet": {
+    "name": "Healing Amulet",
+    "description": "Accelerates natural healing of minor wounds and bruises. The green gemstone glows softly when activated.",
+    "price": "150",
+    "stock": "in-stock",
+    "rarity": "uncommon"
+  },
+  "warding-stone": {
+    "name": "Warding Stone",
+    "description": "A protective stone that wards off negative energies and malevolent spirits from your dwelling.",
+    "price": "200",
+    "stock": "low-stock",
+    "rarity": "rare"
+  },
+  "clairvoyant-crystal": {
+    "name": "Clairvoyant Crystal",
+    "description": "Enhances intuition and provides glimpses into possible futures when held during meditation.",
+    "price": "300",
+    "stock": "in-stock",
+    "rarity": "epic"
+  },
+  "enchanted-trinket": {
+    "name": "Enchanted Trinket",
+    "description": "A mysterious trinket imbued with general magical properties. Effects vary by individual.",
+    "price": "75",
+    "stock": "in-stock",
+    "rarity": "common"
+  },
+  "mending-amulet": {
+    "name": "Mending Amulet",
+    "description": "Accelerates natural healing of minor wounds and bruises.",
+    "price": "",
+    "stock": "in-stock",
+    "rarity": "common"
+  },
+  "vitality-stone": {
+    "name": "Vitality Stone",
+    "description": "Restores energy and alleviates fatigue when held close.",
+    "price": "",
+    "stock": "in-stock",
+    "rarity": "uncommon"
+  },
+  "fever-breaker": {
+    "name": "Fever Breaker",
+    "description": "Place under pillow to reduce fever and promote restful sleep.",
+    "price": "",
+    "stock": "in-stock",
+    "rarity": "common"
+  },
+  "phoenix-tear-vial": {
+    "name": "Phoenix Tear Vial",
+    "description": "Rare restorative elixir capable of healing grievous injuries.",
+    "price": "",
+    "stock": "in-stock",
+    "rarity": "legendary"
+  },
+  "bone-mender": {
+    "name": "Bone Mender",
+    "description": "Speeds recovery of fractures and broken bones significantly.",
+    "price": "",
+    "stock": "in-stock",
+    "rarity": "rare"
+  },
+  "heartbloom-petal": {
+    "name": "Heartbloom Petal",
+    "description": "Calms racing hearts and eases anxiety when worn.",
+    "price": "",
+    "stock": "in-stock",
+    "rarity": "uncommon"
+  },
+  "purifying-salt": {
+    "name": "Purifying Salt",
+    "description": "Cleanses minor toxins from food and drink.",
+    "price": "",
+    "stock": "in-stock",
+    "rarity": "common"
+  },
+  "lifespark-gem": {
+    "name": "Lifespark Gem",
+    "description": "Revives the unconscious and stabilizes critical wounds.",
+    "price": "",
+    "stock": "in-stock",
+    "rarity": "epic"
+  }
+>>>>>>> 89cae801c3211520be0e842b7a189a460ca54b9d
 }
