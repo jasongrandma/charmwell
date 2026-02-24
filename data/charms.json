@@ -1,0 +1,30 @@
+{
+  "healing-amulet": {
+    "name": "Healing Amulet",
+    "description": "Accelerates natural healing of minor wounds and bruises. The green gemstone glows softly when activated.",
+    "price": "150",
+    "stock": "in-stock",
+    "rarity": "uncommon"
+  },
+  "warding-stone": {
+    "name": "Warding Stone",
+    "description": "A protective stone that wards off negative energies and malevolent spirits from your dwelling.",
+    "price": "200",
+    "stock": "low-stock",
+    "rarity": "rare"
+  },
+  "clairvoyant-crystal": {
+    "name": "Clairvoyant Crystal",
+    "description": "Enhances intuition and provides glimpses into possible futures when held during meditation.",
+    "price": "300",
+    "stock": "in-stock",
+    "rarity": "epic"
+  },
+  "enchanted-trinket": {
+    "name": "Enchanted Trinket",
+    "description": "A mysterious trinket imbued with general magical properties. Effects vary by individual.",
+    "price": "75",
+    "stock": "in-stock",
+    "rarity": "common"
+  }
+}

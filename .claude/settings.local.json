@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(uvx --version:*)"
+    ]
+  },
+  "enabledMcpjsonServers": [
+    "nanobanana"
+  ],
+  "enableAllProjectMcpServers": true
+}

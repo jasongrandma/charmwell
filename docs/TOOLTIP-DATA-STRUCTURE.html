@@ -1,0 +1,89 @@
+<!--
+═══════════════════════════════════════════════════════════════════
+  CHARMWELL TOOLTIP DATA STRUCTURE PLAN
+  Step 1 of BUILD-PLAN.md
+  Date: February 23, 2026
+═══════════════════════════════════════════════════════════════════
+
+ITEM: Healing Amulet (Home Page Carousel)
+
+DATA FIELDS STRUCTURE:
+═══════════════════════════════════════════════════════════════════
+
+1. BASIC INFORMATION
+   - charm-name: String (Display name of the charm)
+     Example: "Healing Amulet"
+
+   - description: String (Full description of the item)
+     Example: "Accelerates natural healing of minor wounds and bruises. The green gemstone glows softly when activated."
+
+2. PRICING & AVAILABILITY
+   - price: String/Number (Price in gold coins)
+     Example: "150" or "150-200" for ranges
+     Special: "Contact for Price" if custom/rare
+
+   - stock: String (Current availability status)
+     Options: "in-stock" | "low-stock" | "out-of-stock" | "pre-order"
+     Example: "in-stock"
+
+3. RARITY SYSTEM
+   - rarity: String (Item rarity level)
+     Options: "common" | "uncommon" | "rare" | "epic" | "legendary"
+     Example: "uncommon"
+     Note: Affects border color and badge display
+
+═══════════════════════════════════════════════════════════════════
+
+SAMPLE DATA OBJECT FOR HEALING AMULET:
+═══════════════════════════════════════════════════════════════════
+
+{
+  "charmName": "Healing Amulet",
+  "description": "Accelerates natural healing of minor wounds and bruises. The green gemstone glows softly when activated.",
+  "price": "150",
+  "stock": "in-stock",
+  "rarity": "uncommon"
+}
+
+═══════════════════════════════════════════════════════════════════
+
+HTML DATA ATTRIBUTE FORMAT:
+═══════════════════════════════════════════════════════════════════
+
+<div class="carousel-slide"
+     data-charm-name="Healing Amulet"
+     data-description="Accelerates natural healing of minor wounds and bruises..."
+     data-price="150"
+     data-stock="in-stock"
+     data-rarity="uncommon">
+
+═══════════════════════════════════════════════════════════════════
+
+FIELD TYPE REFERENCE:
+═══════════════════════════════════════════════════════════════════
+
+REQUIRED FIELDS (Must have for all items):
+✓ data-charm-name      [String]
+✓ data-description     [String]
+✓ data-price           [String/Number]
+✓ data-stock           [Enum: in-stock|low-stock|out-of-stock|pre-order]
+✓ data-rarity          [Enum: common|uncommon|rare|epic|legendary]
+
+═══════════════════════════════════════════════════════════════════
+
+VALIDATION RULES:
+═══════════════════════════════════════════════════════════════════
+
+- All data attributes use kebab-case naming
+- Rarity must match one of 5 predefined values
+- Stock must match one of 4 predefined values
+- Price can be number, range (e.g. "150-200"), or text
+- Description should be concise but informative
+
+═══════════════════════════════════════════════════════════════════
+
+NEXT STEP: Add these data attributes to the Healing Amulet
+carousel slide in index.html (Step 2 of BUILD-PLAN.md)
+
+═══════════════════════════════════════════════════════════════════
+-->
