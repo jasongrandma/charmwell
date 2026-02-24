@@ -27,6 +27,8 @@
 
     let hideTimeout;
     let showTimeout;
+    let activeCharmElement = null;
+    let scrollRaf = null;
 
     /**
      * Format price with gold coin symbol
@@ -74,33 +76,33 @@
     function positionTooltip(charmElement) {
         const rect = charmElement.getBoundingClientRect();
         const tooltipRect = tooltip.getBoundingClientRect();
-        const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+        const viewportPadding = 12;
 
         // Default position: to the right of the element
         let left = rect.right + 15;
-        let top = rect.top + scrollY;
+        let top = rect.top;
 
         // Check if tooltip would go off right edge of screen
-        if (left + tooltipRect.width > window.innerWidth) {
+        if (left + tooltipRect.width > window.innerWidth - viewportPadding) {
             // Position to the left instead
             left = rect.left - tooltipRect.width - 15;
         }
 
         // Check if tooltip would go off left edge
-        if (left < 0) {
-            // Center it horizontally
-            left = (window.innerWidth - tooltipRect.width) / 2;
+        if (left < viewportPadding) {
+            // Center it horizontally as a fallback
+            left = Math.max(viewportPadding, (window.innerWidth - tooltipRect.width) / 2);
         }
 
         // Check if tooltip would go off bottom of screen
-        if (top + tooltipRect.height > window.innerHeight + scrollY) {
+        if (top + tooltipRect.height > window.innerHeight - viewportPadding) {
             // Position above instead
-            top = rect.bottom + scrollY - tooltipRect.height;
+            top = rect.bottom - tooltipRect.height;
         }
 
         // Check if tooltip would go off top of screen
-        if (top < scrollY) {
-            top = scrollY + 10;
+        if (top < viewportPadding) {
+            top = viewportPadding;
         }
 
         tooltip.style.left = `${left}px`;
@@ -113,6 +115,8 @@
     function showTooltip(charmElement) {
         // Clear any pending hide
         clearTimeout(hideTimeout);
+
+        activeCharmElement = charmElement;
 
         // Get charm ID from element
         const charmId = charmElement.dataset.charmId;
@@ -146,6 +150,8 @@
         // Clear any pending show
         clearTimeout(showTimeout);
 
+        activeCharmElement = null;
+
         // Add small delay before hiding
         hideTimeout = setTimeout(() => {
             tooltip.classList.remove('visible');
@@ -158,16 +164,18 @@
      */
     function initializeTooltips() {
         // Find all charm elements
-        charmElements = document.querySelectorAll('.charm-item');
+        charmElements = document.querySelectorAll('[data-charm-id]');
 
         if (charmElements.length === 0) {
-            console.warn('No charm items found with .charm-item class');
+            console.warn('No charm items found with data-charm-id');
             return;
         }
 
         console.log(`✓ Initializing tooltips for ${charmElements.length} charm items`);
 
         charmElements.forEach(charm => {
+            charm.setAttribute('aria-describedby', 'charm-tooltip');
+
             // Check if this is a carousel item (to avoid interfering with carousel navigation)
             const isCarouselItem = charm.classList.contains('carousel-slide');
 
@@ -193,8 +201,21 @@
             }
         });
 
-        // Hide tooltip when scrolling
-        window.addEventListener('scroll', hideTooltip);
+        // Keep tooltip aligned while scrolling
+        window.addEventListener('scroll', () => {
+            if (!activeCharmElement || !tooltip.classList.contains('visible')) {
+                return;
+            }
+
+            if (scrollRaf) {
+                return;
+            }
+
+            scrollRaf = window.requestAnimationFrame(() => {
+                positionTooltip(activeCharmElement);
+                scrollRaf = null;
+            });
+        }, { passive: true });
 
         // Reposition tooltip on window resize
         window.addEventListener('resize', () => {

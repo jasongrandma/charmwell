@@ -1,7 +1,9 @@
 /* Charmwell - Mystical Charm Shop Styles */
 
 /* CSS Reset & Base */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -22,7 +24,10 @@ body {
     line-height: 1.6;
 }
 
-h1, h2, h3, h4 {
+h1,
+h2,
+h3,
+h4 {
     font-family: 'Playfair Display', 'Georgia', serif;
     color: var(--primary);
     margin-bottom: 0.5em;
@@ -78,7 +83,7 @@ nav {
 /* Hero Section */
 .hero {
     background: linear-gradient(135deg, rgba(87, 69, 113, 0.65) 0%, rgba(61, 47, 80, 0.65) 100%),
-                url('images/hero-banner.png');
+        url('images/hero-banner.png');
     background-size: cover;
     background-position: center;
     color: var(--secondary);
@@ -221,10 +226,21 @@ section p {
     margin-bottom: 1.5rem;
 }
 
-.carousel-slide:nth-child(1) { background: linear-gradient(135deg, #574571 0%, #7a5f9a 100%); }
-.carousel-slide:nth-child(2) { background: linear-gradient(135deg, #374f2f 0%, #5a7a50 100%); }
-.carousel-slide:nth-child(3) { background: linear-gradient(135deg, #4a4a6a 0%, #6b6b8a 100%); }
-.carousel-slide:nth-child(4) { background: linear-gradient(135deg, #5a4a3a 0%, #7a6a5a 100%); }
+.carousel-slide:nth-child(1) {
+    background: linear-gradient(135deg, #574571 0%, #7a5f9a 100%);
+}
+
+.carousel-slide:nth-child(2) {
+    background: linear-gradient(135deg, #374f2f 0%, #5a7a50 100%);
+}
+
+.carousel-slide:nth-child(3) {
+    background: linear-gradient(135deg, #4a4a6a 0%, #6b6b8a 100%);
+}
+
+.carousel-slide:nth-child(4) {
+    background: linear-gradient(135deg, #5a4a3a 0%, #7a6a5a 100%);
+}
 
 .carousel-btn {
     position: absolute;
@@ -247,8 +263,13 @@ section p {
     color: white;
 }
 
-.carousel-btn.prev { left: 10px; }
-.carousel-btn.next { right: 10px; }
+.carousel-btn.prev {
+    left: 10px;
+}
+
+.carousel-btn.next {
+    right: 10px;
+}
 
 .carousel-dots {
     display: flex;
@@ -325,7 +346,9 @@ label {
     color: var(--primary);
 }
 
-input, textarea, select {
+input,
+textarea,
+select {
     width: 100%;
     padding: 0.75rem;
     border: 1px solid #ccc;
@@ -334,7 +357,9 @@ input, textarea, select {
     font-size: 1rem;
 }
 
-input:focus, textarea:focus, select:focus {
+input:focus,
+textarea:focus,
+select:focus {
     outline: none;
     border-color: var(--primary);
     box-shadow: 0 0 0 2px rgba(87, 69, 113, 0.2);
@@ -355,11 +380,30 @@ textarea {
     text-transform: uppercase;
 }
 
-.rarity-common { background: #e0e0e0; color: #444; }
-.rarity-uncommon { background: #22c55e; color: #052e16; }
-.rarity-rare { background: #3b82f6; color: #fff; }
-.rarity-epic { background: #ec4899; color: #fff; }
-.rarity-legendary { background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #451a03; }
+.rarity-common {
+    background: #e0e0e0;
+    color: #444;
+}
+
+.rarity-uncommon {
+    background: #22c55e;
+    color: #052e16;
+}
+
+.rarity-rare {
+    background: #3b82f6;
+    color: #fff;
+}
+
+.rarity-epic {
+    background: #ec4899;
+    color: #fff;
+}
+
+.rarity-legendary {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    color: #451a03;
+}
 
 /* Charms Grid */
 .charm-item {
@@ -901,10 +945,169 @@ footer p {
     opacity: 0.8;
 }
 
+/* Charm Tooltip Styles */
+[data-charm-id] {
+    cursor: pointer;
+    position: relative;
+}
+
+/* Carousel slides shouldn't look clickable (carousel has its own navigation) */
+.carousel-slide[data-charm-id] {
+    cursor: default;
+}
+
+.charm-tooltip {
+    position: fixed;
+    background: linear-gradient(180deg, #ffffff 0%, #faf9fb 100%);
+    border-radius: 12px;
+    box-shadow: 0 10px 28px rgba(42, 42, 42, 0.18);
+    padding: 0;
+    min-width: 240px;
+    max-width: 320px;
+    z-index: 90;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-8px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    border: 1px solid rgba(87, 69, 113, 0.25);
+    overflow: hidden;
+}
+
+.charm-tooltip.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.tooltip-header {
+    background: linear-gradient(135deg, var(--primary) 0%, #3d2f50 100%);
+    color: var(--secondary);
+    padding: 1rem;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.tooltip-title {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--secondary);
+    font-family: 'Playfair Display', Georgia, serif;
+    letter-spacing: 0.2px;
+    line-height: 1.2;
+}
+
+.tooltip-rarity {
+    font-size: 0.7rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+
+.tooltip-rarity.common {
+    background: #a0a0a0;
+    color: white;
+}
+
+.tooltip-rarity.uncommon {
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+    color: white;
+}
+
+.tooltip-rarity.rare {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    color: white;
+}
+
+.tooltip-rarity.epic {
+    background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+    color: white;
+}
+
+.tooltip-rarity.legendary {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    color: white;
+}
+
+.tooltip-body {
+    padding: 1rem;
+}
+
+.tooltip-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(87, 69, 113, 0.12);
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.info-label {
+    font-size: 0.85rem;
+    color: #666;
+    font-weight: 600;
+}
+
+.info-value {
+    font-size: 0.9rem;
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+.price-value {
+    color: var(--accent);
+}
+
+.stock-value.in-stock {
+    color: #22c55e;
+}
+
+.stock-value.low-stock {
+    color: #f59e0b;
+}
+
+.stock-value.out-of-stock {
+    color: #dc2626;
+}
+
+.stock-value.pre-order {
+    color: #3b82f6;
+}
+
+.tooltip-description {
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: #555;
+    padding: 0.75rem;
+    background: #f6f4f8;
+    border-radius: 6px;
+    border-left: 3px solid rgba(87, 69, 113, 0.8);
+}
+
 /* Utility */
-.text-center { text-align: center; }
-.mt-2 { margin-top: 2rem; }
-.mb-2 { margin-bottom: 2rem; }
+.text-center {
+    text-align: center;
+}
+
+.mt-2 {
+    margin-top: 2rem;
+}
+
+.mb-2 {
+    margin-bottom: 2rem;
+}
 
 /* Responsive */
 @media (max-width: 768px) {

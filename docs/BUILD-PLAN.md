@@ -17,13 +17,13 @@ Add interactive hover functionality to charm items that displays detailed inform
 
 ---
 
-### 2. **Add Data Attributes to First Category (Healing)**
+### 2. **Add Charm IDs to First Category (Healing)**
 - Open charms.html
-- Add `data-*` attributes to each charm-item in the Healing section
-- Include: `data-price`, `data-stock`, `data-duration`, `data-warning`
+- Add `data-charm-id` to each charm-item in the Healing section
+- Ensure each ID matches a key in data/charms.json
 - Test with 3-4 items first
 
-**Deliverable:** Updated HTML with data attributes on Healing charms
+**Deliverable:** Updated HTML with data-charm-id on Healing charms
 
 ---
 
@@ -114,18 +114,17 @@ Add interactive hover functionality to charm items that displays detailed inform
 
 ---
 
-### 11. **Add Data Attributes to All Categories**
-- Copy data attribute pattern from Healing section
-- Add to Clairvoyant category charms (~7 items)
-- Add to Protection category charms (~8 items)
-- Add to Utility category charms (~8 items)
-- Add to Dangerous category charms (~8 items)
+### 11. **Add Charm IDs to Index Page Charms**
+- Open index.html
+- Add data-charm-id to each carousel slide
+- Ensure each ID matches a key in data/charms.json
+- Test hover for all index page charms
 
-**Deliverable:** All charm items have data attributes
+**Deliverable:** Index page charms have working tooltips
 
 ---
 
-### 12. **Create Rarity Information Mapper**
+### 12. **Create Rarity Information Mapper** (Completed)
 - Add JavaScript object mapping rarity levels to descriptions
 - Include: Common, Uncommon, Rare, Epic, Legendary
 - Add rarity-specific details (drop rate, value multiplier)
@@ -135,7 +134,7 @@ Add interactive hover functionality to charm items that displays detailed inform
 
 ---
 
-### 13. **Add Price Formatting Function**
+### 13. **Add Price Formatting Function** (Completed)
 - Create `formatPrice()` utility function
 - Format currency with appropriate symbol (gold coins, etc.)
 - Handle ranges (e.g., "150-200 gold")
@@ -146,7 +145,7 @@ Add interactive hover functionality to charm items that displays detailed inform
 
 ---
 
-### 14. **Implement Smart Positioning Logic**
+### 14. **Implement Smart Positioning Logic** (Completed)
 - Enhance tooltip positioning to detect viewport edges
 - Add logic to flip tooltip position if near screen edge
 - Calculate optimal x/y coordinates
@@ -157,51 +156,7 @@ Add interactive hover functionality to charm items that displays detailed inform
 
 ---
 
-### 15. **Add Stock Status Indicators**
-- Create visual indicators for stock levels
-- Use colors: green (in stock), yellow (low), red (out), blue (pre-order)
-- Add icon or badge to tooltip
-- Show quantity if low stock
-- Test with different stock values
-
-**Deliverable:** Visual stock status in tooltips
-
----
-
-### 16. **Add Warning/Caution Section**
-- Create styled warning box for dangerous items
-- Use amber/red color scheme for warnings
-- Add warning icon
-- Display handling instructions
-- Test with Dangerous category items
-
-**Deliverable:** Warning section for dangerous charms
-
----
-
-### 17. **Implement Mobile/Touch Support**
-- Add touch event listeners for mobile devices
-- Change interaction from hover to tap
-- Add close button for mobile tooltips
-- Test touch interactions (tap to show, tap away to hide)
-- Adjust tooltip size for mobile screens
-
-**Deliverable:** Mobile-friendly tooltip interactions
-
----
-
-### 18. **Add Keyboard Accessibility**
-- Make charm items focusable (add tabindex if needed)
-- Add focus event listeners
-- Allow keyboard navigation (Tab key)
-- Show tooltip on focus, hide on blur
-- Test keyboard-only navigation
-
-**Deliverable:** Keyboard accessible tooltips
-
----
-
-### 19. **Add ARIA Labels & Screen Reader Support**
+### 15. **Add ARIA Labels & Screen Reader Support**
 - Add `aria-describedby` to charm items
 - Add `role="tooltip"` to tooltip element
 - Include `aria-live` for dynamic content
@@ -212,51 +167,7 @@ Add interactive hover functionality to charm items that displays detailed inform
 
 ---
 
-### 20. **Create Usage Instructions Section**
-- Add "How to Use" section to tooltip
-- Display usage instructions from data attribute
-- Format as short bullet points or paragraph
-- Style with subtle background color
-- Test with various instruction lengths
-
-**Deliverable:** Usage instructions in tooltips
-
----
-
-### 21. **Add Crafting Time for Custom Items**
-- Add crafting time field to data structure
-- Display estimated crafting duration
-- Show rush order availability
-- Format time (days, weeks)
-- Test with custom order items
-
-**Deliverable:** Crafting time information displayed
-
----
-
-### 22. **Implement Effect Duration Display**
-- Add effect duration to tooltip stats
-- Format duration (minutes, hours, permanent)
-- Show cooldown time if applicable
-- Use icons for visual clarity
-- Test with various durations
-
-**Deliverable:** Effect duration and cooldown info
-
----
-
-### 23. **Add Related Items Section**
-- Create "Works well with" or "Related charms" section
-- Link to complementary items
-- Show 2-3 related item names
-- Make clickable to view related item
-- Test cross-references
-
-**Deliverable:** Related items suggestions in tooltip
-
----
-
-### 24. **Polish Visual Design**
+### 16. **Polish Visual Design**
 - Review overall tooltip appearance
 - Adjust spacing, padding, margins
 - Fine-tune colors and contrast
@@ -267,7 +178,7 @@ Add interactive hover functionality to charm items that displays detailed inform
 
 ---
 
-### 25. **Add Tooltip Entrance/Exit Delays**
+### 17. **Add Tooltip Entrance/Exit Delays**
 - Implement small delay before showing tooltip (200-300ms)
 - Prevent tooltip flicker on quick hover
 - Add exit delay to allow mouse movement
@@ -278,7 +189,7 @@ Add interactive hover functionality to charm items that displays detailed inform
 
 ---
 
-### 26. **Optimize Performance**
+### 18. **Optimize Performance**
 - Review event listeners (use delegation if needed)
 - Debounce position calculations
 - Minimize DOM manipulations
@@ -289,18 +200,7 @@ Add interactive hover functionality to charm items that displays detailed inform
 
 ---
 
-### 27. **Test Cross-Browser Compatibility**
-- Test in Chrome, Firefox, Safari, Edge
-- Check CSS prefix requirements
-- Verify JavaScript compatibility
-- Test animations in all browsers
-- Document any browser-specific issues
-
-**Deliverable:** Cross-browser compatibility verification
-
----
-
-### 28. **Test Responsive Design**
+### 19. **Test Responsive Design**
 - Test on desktop (1920px, 1366px)
 - Test on tablet (768px)
 - Test on mobile (375px, 414px)
@@ -311,18 +211,7 @@ Add interactive hover functionality to charm items that displays detailed inform
 
 ---
 
-### 29. **Add Tooltip Close Button (Optional Enhancement)**
-- Add X button to tooltip corner
-- Style close button
-- Add click event listener
-- Useful for mobile/accessibility
-- Test visibility and click area
-
-**Deliverable:** Optional close button functionality
-
----
-
-### 30. **Final Testing & Documentation**
+### 20. **Final Testing & Documentation**
 - Test all charm categories thoroughly
 - Verify all data displays correctly
 - Test all interactions (hover, keyboard, touch)
@@ -355,13 +244,11 @@ Add interactive hover functionality to charm items that displays detailed inform
 ✅ Tooltip appears smoothly on hover
 ✅ All charm information displays correctly
 ✅ Responsive on all devices
-✅ Keyboard and screen reader accessible
 ✅ No performance issues
 ✅ Visually consistent with site design
-✅ Works in all major browsers
 
 ---
 
-**Total Estimated Time:** 2.5 - 3 hours (30 steps × 5 minutes)
+**Total Estimated Time:** 1.5 - 2 hours (20 steps × 5 minutes)
 **Complexity Level:** Intermediate
 **Technologies:** HTML5, CSS3, Vanilla JavaScript

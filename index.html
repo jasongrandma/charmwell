@@ -53,13 +53,14 @@
 
             <div class="carousel">
                 <div class="carousel-track">
-                    <div class="carousel-slide">
-                        <img src="images/healing-amulet.png" alt="Healing Amulet - A glowing golden amulet with a green gemstone">
+                    <div class="carousel-slide" data-charm-id="healing-amulet">
+                        <img src="images/healing-amulet.png"
+                            alt="Healing Amulet - A glowing golden amulet with a green gemstone">
                         <p>Healing Amulet</p>
                     </div>
-                    <div class="carousel-slide">Warding Stone</div>
-                    <div class="carousel-slide">Clairvoyant Crystal</div>
-                    <div class="carousel-slide">Enchanted Trinket</div>
+                    <div class="carousel-slide" data-charm-id="warding-stone">Warding Stone</div>
+                    <div class="carousel-slide" data-charm-id="clairvoyant-crystal">Clairvoyant Crystal</div>
+                    <div class="carousel-slide" data-charm-id="enchanted-trinket">Enchanted Trinket</div>
                 </div>
                 <button class="carousel-btn prev" aria-label="Previous slide">&larr;</button>
                 <button class="carousel-btn next" aria-label="Next slide">&rarr;</button>
@@ -84,7 +85,9 @@
 
         <section>
             <h2>Visit Our Shop</h2>
-            <img src="images/store-interior.png" alt="Inside the Charmwell shop - A cozy hillhouse filled with magical charms and enchanted items" class="store-image">
+            <img src="images/store-interior.png"
+                alt="Inside the Charmwell shop - A cozy hillhouse filled with magical charms and enchanted items"
+                class="store-image">
             <p>We warmly invite you to visit our humble hillhouse in Ornaldo. Come browse our entire collection in
                 person, speak with our knowledgeable staff, and discover treasures you won't find anywhere else. There's
                 nothing quite like holding a charm in your hands to feel its magic.</p>
@@ -121,6 +124,31 @@
             dot.addEventListener('click', () => goToSlide(i));
         });
     </script>
+
+    <!-- Charm Tooltip -->
+    <div id="charm-tooltip" class="charm-tooltip" role="tooltip" aria-hidden="true" aria-live="polite">
+        <div class="tooltip-header">
+            <h4 class="tooltip-title"></h4>
+            <span class="tooltip-rarity"></span>
+        </div>
+        <div class="tooltip-body">
+            <div class="tooltip-info">
+                <div class="info-row">
+                    <span class="info-label">Price:</span>
+                    <span class="info-value price-value"></span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Stock:</span>
+                    <span class="info-value stock-value"></span>
+                </div>
+            </div>
+            <div class="tooltip-description"></div>
+        </div>
+    </div>
+
+    <!-- Load charm data first, then tooltip functionality -->
+    <script src="scripts/charm-data.js"></script>
+    <script src="scripts/charm-tooltip.js"></script>
 </body>
 
 </html>
