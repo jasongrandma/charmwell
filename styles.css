@@ -365,6 +365,13 @@ select:focus {
     box-shadow: 0 0 0 2px rgba(87, 69, 113, 0.2);
 }
 
+input:invalid,
+textarea:invalid,
+select:invalid {
+    box-shadow: none;
+    background-image: none;
+}
+
 textarea {
     min-height: 120px;
     resize: vertical;
@@ -657,6 +664,36 @@ textarea {
     background: transparent;
     padding: 0;
     box-shadow: none;
+}
+
+.order-form .field-error {
+    margin-top: 0.45rem;
+    min-height: 1.2rem;
+    font-size: 0.88rem;
+    color: var(--primary);
+    font-style: italic;
+    font-weight: 600;
+}
+
+.order-form input.is-invalid,
+.order-form textarea.is-invalid,
+.order-form select.is-invalid {
+    border-color: var(--primary);
+    background-color: rgba(87, 69, 113, 0.08);
+    box-shadow: 0 0 0 2px rgba(87, 69, 113, 0.2);
+}
+
+.order-form input.is-valid,
+.order-form textarea.is-valid,
+.order-form select.is-valid {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgba(55, 79, 47, 0.18);
+}
+
+.order-form .btn[disabled] {
+    background-color: var(--accent);
+    opacity: 0.7;
+    cursor: not-allowed;
 }
 
 .pricing-guide {

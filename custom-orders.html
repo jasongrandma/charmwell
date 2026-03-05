@@ -34,20 +34,22 @@
         <div class="custom-order-layout">
             <section class="order-form-section">
                 <h2>Request Form</h2>
-                <form class="order-form">
+                <form class="order-form" id="custom-order-form" novalidate>
                     <div class="form-group">
                         <label for="name">Your Name</label>
-                        <input type="text" id="name" name="name" placeholder="Enter your full name" required>
+                        <input type="text" id="name" name="name" placeholder="Enter your full name" required aria-describedby="name-error">
+                        <p class="field-error" id="name-error" aria-live="polite"></p>
                     </div>
 
                     <div class="form-group">
                         <label for="email">Contact Crystal Address</label>
-                        <input type="email" id="email" name="email" placeholder="your@crystal.address" required>
+                        <input type="email" id="email" name="email" placeholder="your@crystal.address" required aria-describedby="email-error">
+                        <p class="field-error" id="email-error" aria-live="polite"></p>
                     </div>
 
                     <div class="form-group">
                         <label for="item-form">Desired Form</label>
-                        <select id="item-form" name="item-form" required>
+                        <select id="item-form" name="item-form" required aria-describedby="item-form-error">
                             <option value="">Select item type...</option>
                             <option value="amulet">Amulet / Pendant</option>
                             <option value="ring">Ring</option>
@@ -59,11 +61,12 @@
                             <option value="household">Household Object</option>
                             <option value="other">Other (describe below)</option>
                         </select>
+                        <p class="field-error" id="item-form-error" aria-live="polite"></p>
                     </div>
 
                     <div class="form-group">
                         <label for="magic-type">Magic Type</label>
-                        <select id="magic-type" name="magic-type" required>
+                        <select id="magic-type" name="magic-type" required aria-describedby="magic-type-error">
                             <option value="">Select magic category...</option>
                             <option value="healing">Healing & Restoration</option>
                             <option value="protection">Protection & Warding</option>
@@ -74,16 +77,18 @@
                             <option value="communication">Communication & Translation</option>
                             <option value="other">Other / Mixed</option>
                         </select>
+                        <p class="field-error" id="magic-type-error" aria-live="polite"></p>
                     </div>
 
                     <div class="form-group">
                         <label for="function">Desired Function</label>
-                        <textarea id="function" name="function" placeholder="Describe what you want the item to do. Be as specific as possible about the magical properties and effects you desire." required></textarea>
+                        <textarea id="function" name="function" placeholder="Describe what you want the item to do. Be as specific as possible about the magical properties and effects you desire." required aria-describedby="function-error"></textarea>
+                        <p class="field-error" id="function-error" aria-live="polite"></p>
                     </div>
 
                     <div class="form-group">
                         <label for="budget">Budget Range</label>
-                        <select id="budget" name="budget" required>
+                        <select id="budget" name="budget" required aria-describedby="budget-error">
                             <option value="">Select your budget...</option>
                             <option value="modest">Modest (simple enchantments)</option>
                             <option value="standard">Standard (reliable magic)</option>
@@ -91,14 +96,16 @@
                             <option value="legendary">Legendary (rare materials, complex magic)</option>
                             <option value="discuss">Prefer to discuss</option>
                         </select>
+                        <p class="field-error" id="budget-error" aria-live="polite"></p>
                     </div>
 
                     <div class="form-group">
                         <label for="notes">Additional Notes</label>
-                        <textarea id="notes" name="notes" placeholder="Any other details, preferences, or questions..."></textarea>
+                        <textarea id="notes" name="notes" placeholder="Any other details, preferences, or questions..." required aria-describedby="notes-error"></textarea>
+                        <p class="field-error" id="notes-error" aria-live="polite"></p>
                     </div>
 
-                    <button type="submit" class="btn btn-accent">Submit Request</button>
+                    <button type="submit" class="btn btn-accent" id="submit-request" disabled>Submit Request</button>
                 </form>
             </section>
 
@@ -150,6 +157,93 @@
         <p>&copy; Charmwell - Humble Hillhouse, Ornaldo</p>
         <p>Purveyors of fine arcana since time immemorial</p>
     </footer>
+
+    <script>
+        const form = document.getElementById('custom-order-form');
+        const submitButton = document.getElementById('submit-request');
+
+        const fields = {
+            name: document.getElementById('name'),
+            email: document.getElementById('email'),
+            itemForm: document.getElementById('item-form'),
+            magicType: document.getElementById('magic-type'),
+            function: document.getElementById('function'),
+            budget: document.getElementById('budget'),
+            notes: document.getElementById('notes')
+        };
+
+        const messages = {
+            name: 'Please enter your full name.',
+            email: 'Please enter a valid crystal address (name@address.com).',
+            itemForm: 'Select a form type or other and describe below.',
+            magicType: 'Choose a magic type so we can attune your request.',
+            function: 'Tell us the desired function so the enchantment behaves as intended.',
+            budget: 'Pick a budget range so we can match materials and magic.',
+            notes: 'Add a few extra notes so our artisans capture your vision.'
+        };
+
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        function setFieldState(input, isValid, message) {
+            const errorElement = document.getElementById(`${input.id}-error`);
+            input.classList.toggle('is-invalid', !isValid);
+            input.classList.toggle('is-valid', isValid);
+            errorElement.textContent = isValid ? '' : message;
+        }
+
+        function validateField(input) {
+            const value = input.value.trim();
+
+            if (input.id === 'email') {
+                const validEmail = value.length > 0 && emailPattern.test(value);
+                setFieldState(input, validEmail, messages.email);
+                return validEmail;
+            }
+
+            if (input.tagName === 'SELECT') {
+                const validSelect = value !== '';
+                if (input.id === 'item-form') {
+                    setFieldState(input, validSelect, messages.itemForm);
+                } else if (input.id === 'magic-type') {
+                    setFieldState(input, validSelect, messages.magicType);
+                } else {
+                    setFieldState(input, validSelect, messages.budget);
+                }
+                return validSelect;
+            }
+
+            const hasText = value.length > 0;
+            if (input.id === 'name') {
+                setFieldState(input, hasText, messages.name);
+            } else if (input.id === 'function') {
+                setFieldState(input, hasText, messages.function);
+            } else {
+                setFieldState(input, hasText, messages.notes);
+            }
+
+            return hasText;
+        }
+
+        function updateFormState() {
+            const allValid = Object.values(fields).every((field) => validateField(field));
+            submitButton.disabled = !allValid;
+        }
+
+        Object.values(fields).forEach((field) => {
+            field.addEventListener('input', updateFormState);
+            field.addEventListener('change', updateFormState);
+            field.addEventListener('blur', () => validateField(field));
+        });
+
+        form.addEventListener('submit', (event) => {
+            updateFormState();
+            if (submitButton.disabled) {
+                event.preventDefault();
+            }
+        });
+
+        updateFormState();
+    </script>
 </body>
 
 </html>

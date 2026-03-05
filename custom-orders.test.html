@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Orders Form Test Runner</title>
+    <style>
+        :root {
+            --primary: #574571;
+            --secondary: #f2f4ed;
+            --accent: #374f2f;
+            --danger: #7a2e5d;
+            --ok: #2f6a42;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: var(--secondary);
+            color: #2a2a2a;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 1.25rem;
+        }
+
+        h1 {
+            color: var(--primary);
+            margin: 0 0 0.5rem;
+        }
+
+        p {
+            margin-top: 0;
+        }
+
+        .toolbar {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        button {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 0.55rem 1rem;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        button:hover {
+            filter: brightness(0.95);
+        }
+
+        .summary {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .panel {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            padding: 0.9rem;
+        }
+
+        .panel h2 {
+            margin: 0 0 0.75rem;
+            font-size: 1rem;
+            color: var(--primary);
+        }
+
+        #results {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            gap: 0.45rem;
+            max-height: 520px;
+            overflow: auto;
+        }
+
+        .result-item {
+            border-left: 4px solid #999;
+            border-radius: 6px;
+            padding: 0.45rem 0.6rem;
+            font-size: 0.94rem;
+            background: #f9f9f9;
+        }
+
+        .pass {
+            border-color: var(--ok);
+        }
+
+        .fail {
+            border-color: var(--danger);
+            background: #fff4fa;
+        }
+
+        iframe {
+            width: 100%;
+            min-height: 620px;
+            border: 1px solid #d7d7d7;
+            border-radius: 8px;
+            background: #fff;
+        }
+
+        @media (max-width: 900px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Custom Orders Test Runner</h1>
+        <p>Runs validation checks against <strong>custom-orders.html</strong> and reports code/flow issues.</p>
+
+        <div class="toolbar">
+            <button id="run-tests">Run Tests</button>
+            <span class="summary" id="summary">No tests run yet.</span>
+        </div>
+
+        <div class="layout">
+            <section class="panel">
+                <h2>Results</h2>
+                <ul id="results"></ul>
+            </section>
+
+            <section class="panel">
+                <h2>Live Form Under Test</h2>
+                <iframe id="target" src="custom-orders.html" title="custom orders form"></iframe>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        const runButton = document.getElementById('run-tests');
+        const summary = document.getElementById('summary');
+        const results = document.getElementById('results');
+        const iframe = document.getElementById('target');
+
+        function renderResult(ok, name, details = '') {
+            const li = document.createElement('li');
+            li.className = `result-item ${ok ? 'pass' : 'fail'}`;
+            li.textContent = `${ok ? 'PASS' : 'FAIL'} — ${name}${details ? `: ${details}` : ''}`;
+            results.appendChild(li);
+        }
+
+        function assert(condition, name, details = '') {
+            renderResult(Boolean(condition), name, !condition ? details : '');
+            return Boolean(condition);
+        }
+
+        function dispatchTextInput(field, value) {
+            field.value = value;
+            field.dispatchEvent(new Event('input', { bubbles: true }));
+            field.dispatchEvent(new Event('blur', { bubbles: true }));
+        }
+
+        function dispatchSelectInput(field, value) {
+            field.value = value;
+            field.dispatchEvent(new Event('change', { bubbles: true }));
+            field.dispatchEvent(new Event('blur', { bubbles: true }));
+        }
+
+        function getDom() {
+            const doc = iframe.contentDocument;
+            if (!doc) {
+                throw new Error('Unable to access iframe document. Open this file from the same folder as custom-orders.html.');
+            }
+
+            return {
+                doc,
+                submit: doc.getElementById('submit-request'),
+                name: doc.getElementById('name'),
+                email: doc.getElementById('email'),
+                itemForm: doc.getElementById('item-form'),
+                magicType: doc.getElementById('magic-type'),
+                func: doc.getElementById('function'),
+                budget: doc.getElementById('budget'),
+                notes: doc.getElementById('notes'),
+                nameError: doc.getElementById('name-error'),
+                emailError: doc.getElementById('email-error')
+            };
+        }
+
+        function resetFrame() {
+            return new Promise((resolve) => {
+                iframe.onload = () => resolve();
+                iframe.src = 'custom-orders.html';
+            });
+        }
+
+        async function runTests() {
+            results.innerHTML = '';
+            summary.textContent = 'Running...';
+
+            await resetFrame();
+
+            let passed = 0;
+            let total = 0;
+            const check = (condition, name, details) => {
+                total += 1;
+                if (assert(condition, name, details)) {
+                    passed += 1;
+                }
+            };
+
+            const view = getDom();
+
+            check(view.submit.disabled, 'Submit starts disabled', 'Submit should not be clickable on page load.');
+
+            dispatchTextInput(view.name, '');
+            check(view.nameError.textContent.trim().length > 0, 'Name has custom error when blank', 'Expected a custom full-name message.');
+
+            dispatchTextInput(view.email, 'mist@fog');
+            check(view.emailError.textContent.trim().length > 0, 'Email has custom error when invalid', 'Expected crystal address format hint.');
+            check(view.submit.disabled, 'Submit stays disabled with invalid email', 'Invalid email should block submission.');
+
+            dispatchTextInput(view.name, 'Ada Moonwater');
+            dispatchTextInput(view.email, 'ada@moonlight.com');
+            dispatchSelectInput(view.itemForm, 'amulet');
+            dispatchSelectInput(view.magicType, 'protection');
+            dispatchTextInput(view.func, 'Create a ward that glows near danger.');
+            dispatchSelectInput(view.budget, 'standard');
+
+            check(view.submit.disabled, 'Submit still disabled until notes filled', 'Notes are required and should keep submit disabled.');
+
+            dispatchTextInput(view.notes, 'Please avoid silver alloys due to skin sensitivity.');
+            check(!view.submit.disabled, 'Submit enables when all fields are valid', 'All required fields are filled and valid.');
+
+            summary.textContent = `${passed}/${total} checks passed`;
+        }
+
+        runButton.addEventListener('click', runTests);
+    </script>
+</body>
+
+</html>
